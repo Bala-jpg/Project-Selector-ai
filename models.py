@@ -54,6 +54,9 @@ class Projects(Base):
     id = Column(Integer, primary_key=True, index=True)
     name = Column(String(255), index=True)
     description = Column(String(255), index=True)
+    tech_stack = Column(String(50),index=True)
+    github_url = Column(String(255), index=True)
+    live_link = Column(String(255), index=True)
     
 class Skills(Base):
 
