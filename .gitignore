@@ -3,6 +3,8 @@ __pycache__/
 *.py[codz]
 *$py.class
 test.db
+documents.md
+output.pdf
 # C extensions
 *.so
 test.py

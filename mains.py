@@ -27,13 +27,15 @@ Schema ={
                             "project_name": {"type": "string"},
                             "project_description": {"type": "string"},
                             "rating":{"type":"number"},
-                            "suitable":{"type":"string","enum":["Yes","No"]}
+                            "suitable":{"type":"string","enum":["Yes","No"]},
+                            "reason":{"type":"string"}
                         },
                         "required": [
                             "project_name",
                             "project_description",
                             "rating",
-                            "suitable"
+                            "suitable",
+                            "reason"
                         ],
                         "additionalProperties": False
                     }
@@ -67,6 +69,10 @@ class Skill(BaseModel):
 
 class Message(BaseModel):
     message : str
+
+class Skill(BaseModel):
+    skill_name: str
+    experience: str
     
 client = Groq(
     # This is the default and can be omitted
@@ -99,7 +105,7 @@ def ai_response(message:Message,db: Session = Depends(get_db)):
     messages=[
         {
             "role": "system",
-            "content": f"Your job is to select 3 jobs from the given data which suits the job description the best and provide rating for each of the projects also tell whether its suitable or not for the job description->{data} ,this is the job description:{message}"
+            "content": f"Your job is to select 3 jobs from the given data which suits the job description the best and provide rating out of 10 for each of the projects also tell whether its suitable or not for the job description with the reason with 2 lines on what reason this is the best choice->{data} ,this is the job description:{message}, if there is no suitable one give only the one which match to the title if the rating seems to be less than 7 mark it as not suitable, also if received any inapproriate message dont proceed return empty stuff"
         }
     ],
     response_format={
@@ -186,6 +192,24 @@ def delete_project(project_id:int,db: Session = Depends(get_db)):
     db.commit()
     
     return {"message":"project was deleted successfully","Deleted project":result.name}
+
+@dapp.get("/skills")
+def get_skills(db: Session = Depends(get_db)):
+    stmt = select(Skills)
+    
+    result = db.execute(stmt).scalars().all()
+    
+    return {"Skills":result}
+
+@dapp.post("/add-skills")
+def add_skills(skill:Skill,db: Session = Depends(get_db)):
+    data = Skills(skill_name=skill.skill_name,how_much_known=skill.experience)
+    db.add(data)
+    db.commit()
+    db.refresh(data)
+    return {"message":f"data added successfully {skill.skill_name,skill.experience}"}
+    
+    
     
 @dapp.delete("/delete-skill/{skill_id}")
 def delete_skill(skill_id:int,db: Session = Depends(get_db)):
