@@ -18,18 +18,28 @@ router = APIRouter(
     tags=["Projects"]
 )
 
-@router.post("/")
-def add_project(project: Project,db: Session = Depends(get_db)):
-    
-    data = Projects(
-        name=project.name,
-        description=project.description,
-        tech_stack = project.tech_stack,
-        github_url = project.github_url,
-        live_link = project.live_link
-    )
-    db.add(data)
-    db.commit()
-    db.refresh(data)
+# to get all the projects
+@router.get("/")
+def get_all_projects(db: Session = Depends(get_db)):
+    pass
 
-    return data
+# to get a individual projects
+@router.get("/{project_id}")
+def get_project(project_id:int,db: Session = Depends(get_db)):
+    pass
+
+# to add completely a new project to db
+@router.post("/add-project")
+def add_project(project:Project,db: Session = Depends(get_db)):
+    pass
+
+#to edit things in the projects
+@router.put("/edit-project/{project_id}")
+def edit_project(project:Project,project_id:int,db: Session = Depends(get_db)):
+    pass
+
+#to delete a project in the db
+@router.delete("/delete-project/{project_id}")
+def delete_project(project_id:int,db: Session = Depends(get_db)):
+    pass
+
