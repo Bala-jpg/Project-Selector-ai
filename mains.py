@@ -9,7 +9,7 @@ from sqlalchemy.orm import Session
 from sqlalchemy import select
 import json
 from fastapi.middleware.cors import CORSMiddleware
-from routes import projects,skills,internship
+from routes import projects,skills,internship,certificates
 
 load_dotenv()
 
@@ -80,6 +80,7 @@ dapp.add_middleware(
 dapp.include_router(projects.router)
 dapp.include_router(skills.router)
 dapp.include_router(internship.router)
+dapp.include_router(certificates.router)
 
 @dapp.get("/")
 def heathy_check():
