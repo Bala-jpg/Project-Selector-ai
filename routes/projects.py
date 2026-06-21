@@ -29,7 +29,9 @@ def get_all_projects(db: Session = Depends(get_db)):
 @router.get("/{project_id}")
 def get_project(project_id:int,db: Session = Depends(get_db)):
     project = db.get(Projects,project_id)
-    return {"name":project.name,"description":project.description,"techstack":project.tech_stack,"github_url":project.github_url,"live_link":project.live_link}
+    if not project:
+        raise HTTPException(status_code=404,detail="Project not found for the given id")
+    return {"name":project.name,"description":project.description,"tech_stack":project.tech_stack,"github_url":project.github_url,"live_link":project.live_link}
 
 # to add completely a new project to db
 @router.post("/add-project")
@@ -38,7 +40,7 @@ def add_project(project:Project,db: Session = Depends(get_db)):
     db.add(new_project)
     db.commit()
     db.refresh(new_project)
-    return {"message":f"Project:{project.name} have been added successfully"}
+    return {"message":f"Project: {project.name} have been added successfully"}
 
 
 #to edit things in the projects
@@ -53,13 +55,15 @@ def edit_project(project:Project,project_id:int,db: Session = Depends(get_db)):
     db.commit()
     db.refresh(curr_project)
     
-    return {"message":f"Project:{project.name} has been updated successfully"}    
+    return {"message":f"Project: {project.name} has been updated successfully"}    
     
     
 #to delete a project in the db
 @router.delete("/delete-project/{project_id}")
 def delete_project(project_id:int,db: Session = Depends(get_db)):
     project = db.get(Projects,project_id)
+    if not project:
+        raise HTTPException(status_code=404,detail="Project not found for the given id")
     db.delete(project)
     db.commit()
     return {"message":f"Project:{project.name} have been deleted successfully"}
