@@ -14,20 +14,20 @@ class UserDetails(Base):
     Location = Column(String(40), index=True)
     profession_summary = Column(String(255), index=True)
 
-class Education(Base):
+class Educations(Base):
     
     __tablename__ = "education"
     id = Column(Integer, primary_key=True, index=True)
     course_name = Column(String(50),index=True)
     cgpa = Column(Float,index=True)
     start_year = Column(Integer,index=True)
-    End_year = Column(Integer,index=True)
+    end_year = Column(Integer,index=True)
     college_name = Column(String(50), index=True)
     location = Column(String(50),index=True)
     
-class Certificate(Base):
+class Certificates(Base):
     
-    __tablename__= "certificate"
+    __tablename__= "certificates"
     id = Column(Integer, primary_key=True, index=True)
     certificate_issuer = Column(String(255),index=True)
     certificate_name = Column(String(50), index=True)
@@ -41,7 +41,7 @@ class Internship(Base):
     description = Column(String(255),index=True)
     Duration = Column(String(20),index=True)
     
-class Achievement(Base):
+class Achievements(Base):
     
     __tablename__="achievements"
     id = Column(Integer, primary_key=True, index=True)
