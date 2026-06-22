@@ -1,6 +1,18 @@
-from sqlalchemy import Column, Integer, String,Float
+from sqlalchemy import Column, Integer, String,Float, DateTime, ForeignKey
 from database import Base
+from sqlalchemy.sql import func
+import uuid 
 
+
+class User(Base):
+    
+    __tablename__ = "users"
+    user_uuid = Column(String(36),primary_key=True,default=lambda: str(uuid.uuid4()))
+    username = Column(String(50),nullable=False,unique=True,index=True)
+    email = Column(String(255),nullable=False,unique=True,index=True)
+    password = Column(String(255),nullable=False)
+    created_at = Column(DateTime(timezone=True),server_default=func.now())
+    
 class UserDetails(Base):
     
     __tablename__ = "user_details"

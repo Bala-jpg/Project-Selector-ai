@@ -4,3 +4,7 @@ fastapi
 uvicorn[standard]
 pydantic
 SQLAlchemy
+passlib==1.7.4
+bcrypt==4.0.1
+python-jose[cryptography]
+email-validator
