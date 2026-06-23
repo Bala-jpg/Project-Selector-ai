@@ -25,6 +25,9 @@ class UserDetails(Base):
     portfolio_link = Column(String(40), index=True)
     Location = Column(String(40), index=True)
     profession_summary = Column(String(255), index=True)
+    user_uuid = Column(String(36),ForeignKey("users.user_uuid"),nullable=False)
+
+
 
 class Educations(Base):
     
@@ -36,6 +39,9 @@ class Educations(Base):
     end_year = Column(Integer,index=True)
     college_name = Column(String(50), index=True)
     location = Column(String(50),index=True)
+    user_uuid = Column(String(36),ForeignKey("users.user_uuid"),nullable=False)
+
+
     
 class Certificates(Base):
     
@@ -43,6 +49,9 @@ class Certificates(Base):
     id = Column(Integer, primary_key=True, index=True)
     certificate_issuer = Column(String(255),index=True)
     certificate_name = Column(String(50), index=True)
+    user_uuid = Column(String(36),ForeignKey("users.user_uuid"),nullable=False)
+
+
     
 class Internship(Base):
     
@@ -52,12 +61,18 @@ class Internship(Base):
     role = Column(String(20), index=True)
     description = Column(String(255),index=True)
     Duration = Column(String(20),index=True)
+    user_uuid = Column(String(36),ForeignKey("users.user_uuid"),nullable=False)
+
+
     
 class Achievements(Base):
     
     __tablename__="achievements"
     id = Column(Integer, primary_key=True, index=True)
     description = Column(String(255),index=True)
+    user_uuid = Column(String(36),ForeignKey("users.user_uuid"),nullable=False)
+
+
     
 
 class Projects(Base):
@@ -69,6 +84,9 @@ class Projects(Base):
     tech_stack = Column(String(50),index=True)
     github_url = Column(String(255), index=True)
     live_link = Column(String(255), index=True)
+    user_uuid = Column(String(36),ForeignKey("users.user_uuid"),nullable=False)
+
+
     
 class Skills(Base):
 
@@ -76,3 +94,5 @@ class Skills(Base):
     id = Column(Integer, primary_key=True, index=True)
     name = Column(String(255), index=True)
     description = Column(String(255), index=True)
+    user_uuid = Column(String(36),ForeignKey("users.user_uuid"),nullable=False)
+
