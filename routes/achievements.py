@@ -18,7 +18,7 @@ router=APIRouter(
 # to get all the achievements
 @router.get("/")
 def get_all_achievement(db: Session = Depends(get_db),current_user: User = Depends(get_current_user)):
-    query = select(Achievements.where(Achievements.user_uuid == current_user.user_uuid))
+    query = select(Achievements).where(Achievements.user_uuid == current_user.user_uuid)
     achievements = db.scalars(query).all()
     return {"Achievements": achievements}
 

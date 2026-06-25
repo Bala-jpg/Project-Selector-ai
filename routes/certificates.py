@@ -59,7 +59,7 @@ def delete_certificate(certificate_id:int,db: Session = Depends(get_db),current_
     if not certificate:
         raise HTTPException(status_code=404,detail="Certificate not found for the given id")
     if certificate.user_uuid != current_user.user_uuid:
-        raise HTTPException(status_code=403,detail="You do not have permission to delete this achievement")
+        raise HTTPException(status_code=403,detail="You do not have permission to delete this certificate")
     
     db.delete(certificate)
     db.commit()

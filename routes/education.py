@@ -33,7 +33,7 @@ def get_all_education(db: Session = Depends(get_db),current_user: User = Depends
 def get_achievement(education_id:int,db: Session = Depends(get_db),current_user: User = Depends(get_current_user)):
     education=db.get(Educations,education_id)
     if not education:
-        raise HTTPException(status_code=404,detail="Certificate not found for the given id")
+        raise HTTPException(status_code=404,detail="Education not found for the given id")
     if education.user_uuid != current_user.user_uuid:
         raise HTTPException(status_code=403,detail="You do not have permission to view this education")
     return education
